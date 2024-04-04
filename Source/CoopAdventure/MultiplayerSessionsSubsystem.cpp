@@ -37,3 +37,15 @@ void UMultiplayerSessionsSubsystem::Deinitialize()
 {
     //UE_LOG(LogTemp, Warning, TEXT("MSS Deinitialize"));
 }
+
+
+void UMultiplayerSessionsSubsystem::CreateServer(FString ServerName)
+{
+    PrintString(FString("Creating Server '") + ServerName + "'");
+}
+
+
+void UMultiplayerSessionsSubsystem::FindServer(FString ServerName)
+{
+    PrintString(FString("Finding Server '") + ServerName + "'");
+}
