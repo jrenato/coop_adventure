@@ -83,6 +83,11 @@ void UMultiplayerSessionsSubsystem::FindServer(FString ServerName)
 void UMultiplayerSessionsSubsystem::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful)
 {
     PrintString(FString::Printf(TEXT("OnCreateSessionComplete: %s, %d"), *SessionName.ToString(), bWasSuccessful));
+
+    if (bWasSuccessful)
+    {
+        GetWorld()->ServerTravel("/Game/ThirdPerson/Maps/ThirdPersonMap?listen");
+    }
 }
 
 
