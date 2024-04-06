@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Subsystems/GameInstanceSubsystem.h"
 #include "Interfaces/OnlineSessionInterface.h"
+#include "OnlineSessionSettings.h"
 #include "MultiplayerSessionsSubsystem.generated.h"
 
 /**
@@ -17,6 +18,14 @@ class COOPADVENTURE_API UMultiplayerSessionsSubsystem : public UGameInstanceSubs
 
 private:
 	IOnlineSessionPtr SessionInterface;
+
+	FName MySessionName;
+
+	FString ServerNameToFind;
+	TSharedPtr<FOnlineSessionSearch> SessionSearch;
+
+	bool CreateServerAfterDestroy;
+	FString DestroyServerName;
 
 public:	
 	UMultiplayerSessionsSubsystem();
@@ -31,8 +40,8 @@ public:
 	void FindServer(FString ServerName);
 
 	void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);
+	void OnDestroySessionComplete(FName SessionName, bool bWasSuccessful);
 	void OnFindSessionsComplete(bool bWasSuccessful);
 	void OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
-	void OnDestroySessionComplete(FName SessionName, bool bWasSuccessful);
 	void OnStartSessionComplete(FName SessionName, bool bWasSuccessful);
 };
