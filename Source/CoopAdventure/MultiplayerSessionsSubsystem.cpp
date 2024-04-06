@@ -55,6 +55,7 @@ void UMultiplayerSessionsSubsystem::CreateServer(FString ServerName)
     if (ServerName.IsEmpty())
     {
         PrintString(FString("Server name cannot be empty"));
+        ServerCreateDelegate.Broadcast(false);
         return;
     }
 
@@ -98,6 +99,7 @@ void UMultiplayerSessionsSubsystem::FindServer(FString ServerName)
     if (ServerName.IsEmpty())
 	{
 		PrintString(FString("Server name cannot be empty"));
+        ServerJoinDelegate.Broadcast(false);
 		return;
 	}
 
@@ -116,6 +118,8 @@ void UMultiplayerSessionsSubsystem::FindServer(FString ServerName)
 void UMultiplayerSessionsSubsystem::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful)
 {
     PrintString(FString::Printf(TEXT("OnCreateSessionComplete: %s, %d"), *SessionName.ToString(), bWasSuccessful));
+
+    ServerCreateDelegate.Broadcast(bWasSuccessful);
 
     if (bWasSuccessful)
     {
@@ -139,8 +143,12 @@ void UMultiplayerSessionsSubsystem::OnDestroySessionComplete(FName SessionName, 
 
 void UMultiplayerSessionsSubsystem::OnFindSessionsComplete(bool bWasSuccessful)
 {
-    if (!bWasSuccessful) return;
-    if (ServerNameToFind.IsEmpty()) return;
+    if (!bWasSuccessful || ServerNameToFind.IsEmpty())
+    {
+		PrintString(FString("OnFindSessionsComplete failed"));
+		ServerJoinDelegate.Broadcast(false);
+		return;
+    }
 
     TArray<FOnlineSessionSearchResult> SearchResults = SessionSearch->SearchResults;
     FOnlineSessionSearchResult* CorrectSearchResult = 0;
@@ -177,6 +185,7 @@ void UMultiplayerSessionsSubsystem::OnFindSessionsComplete(bool bWasSuccessful)
 	{
 		PrintString(FString("Could not find server with name: " + ServerNameToFind));
 		ServerNameToFind = "";
+		ServerJoinDelegate.Broadcast(false);
 	}
 }
 
@@ -186,6 +195,7 @@ void UMultiplayerSessionsSubsystem::OnJoinSessionComplete(FName SessionName, EOn
     if (Result != EOnJoinSessionCompleteResult::Success)
     {
         PrintString(FString("Failed to join session"));
+		ServerJoinDelegate.Broadcast(false);
 		return;
     }
 
@@ -197,6 +207,7 @@ void UMultiplayerSessionsSubsystem::OnJoinSessionComplete(FName SessionName, EOn
     if (!Success)
 	{
 		PrintString(FString("Failed to get Address String"));
+		ServerJoinDelegate.Broadcast(false);
 		return;
 	}
 
@@ -206,9 +217,11 @@ void UMultiplayerSessionsSubsystem::OnJoinSessionComplete(FName SessionName, EOn
     if (!PlayerController)
 	{
 		PrintString(FString("Failed to get player controller"));
+		ServerJoinDelegate.Broadcast(false);
 		return;
 	}
 
+	ServerJoinDelegate.Broadcast(true);
 	PlayerController->ClientTravel(AddressString, ETravelType::TRAVEL_Absolute);
 }
 
