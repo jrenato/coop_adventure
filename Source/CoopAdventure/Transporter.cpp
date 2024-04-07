@@ -35,6 +35,21 @@ void UTransporter::TickComponent(float DeltaTime, ELevelTick TickType, FActorCom
 
 	AllTriggerActorsActivated = ActivatedTriggerCount >= TriggerActors.Num();
 
+	AActor* TransporterOwner = GetOwner();
+
+	if (TransporterOwner && TransporterOwner->HasAuthority() && ArePointsSet)
+	{
+		FVector CurrentLocation = TransporterOwner->GetActorLocation();
+		float Speed = FVector::Distance(StartPoint, EndPoint) / MoveTime;
+
+		FVector TargetLocation = AllTriggerActorsActivated ? EndPoint : StartPoint;
+
+		if (!CurrentLocation.Equals(TargetLocation))
+		{
+			FVector NewLocation = FMath::VInterpConstantTo(CurrentLocation, TargetLocation, DeltaTime, Speed);
+			TransporterOwner->SetActorLocation(NewLocation);
+		}
+	}
 }
 
 
