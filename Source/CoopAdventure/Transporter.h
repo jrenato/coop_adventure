@@ -3,8 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 #include "Components/ActorComponent.h"
 #include "PressurePlate.h"
+
 #include "Transporter.generated.h"
 
 
@@ -39,7 +41,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Transporter")
 	bool AllTriggerActorsActivated;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION()
 	void SetPoints(FVector Start, FVector End);
 
 	UFUNCTION()
