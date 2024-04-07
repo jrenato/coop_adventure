@@ -48,6 +48,9 @@ public:
 	void OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
 	void OnStartSessionComplete(FName SessionName, bool bWasSuccessful);
 
+	UPROPERTY(BlueprintReadWrite)
+	FString GameMapPath;
+
 	UPROPERTY(BlueprintAssignable)
 	FServerCreateDelegate ServerCreateDelegate;
 
