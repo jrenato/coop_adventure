@@ -78,16 +78,18 @@ void APressurePlate::Tick(float DeltaTime)
 	{
 		if (!IsActivated)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Cyan, TEXT("Activated"));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Cyan, TEXT("Activated"));
 			IsActivated = true;
+			OnActivated.Broadcast();
 		}
 	}
 	else
 	{
 		if (IsActivated)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::White, TEXT("Deactivated"));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::White, TEXT("Deactivated"));
 			IsActivated = false;
+			OnDeactivated.Broadcast();
 		}
 	}
 }

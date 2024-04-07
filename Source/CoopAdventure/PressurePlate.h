@@ -7,6 +7,9 @@
 #include "Components/StaticMeshComponent.h"
 #include "PressurePlate.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPressurePlateActivated);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPressurePlateDeactivated);
+
 UCLASS()
 class COOPADVENTURE_API APressurePlate : public AActor
 {
@@ -35,4 +38,10 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	bool IsActivated;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnPressurePlateActivated OnActivated;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnPressurePlateDeactivated OnDeactivated;
 };
