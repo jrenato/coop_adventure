@@ -12,12 +12,19 @@ UTransporter::UTransporter()
 	StartPoint = FVector::Zero();
 	EndPoint = FVector::Zero();
 	ArePointsSet = false;
+
+	OwnerIsTriggerActor = false;
 }
 
 
 void UTransporter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (OwnerIsTriggerActor)
+	{
+		TriggerActors.Add(Cast<APressurePlate>(GetOwner()));
+	}
 
 	for (APressurePlate* PressurePlate : TriggerActors)
 	{

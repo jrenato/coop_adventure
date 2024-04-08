@@ -12,6 +12,9 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPressurePlateActivated);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPressurePlateDeactivated);
 
+// Forward declarations to prevent circular references.
+class UTransporter;
+
 UCLASS()
 class COOPADVENTURE_API APressurePlate : public AActor
 {
@@ -37,6 +40,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	bool IsActivated;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	UTransporter* Transporter;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnPressurePlateActivated OnActivated;

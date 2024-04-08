@@ -1,4 +1,5 @@
 #include "PressurePlate.h"
+#include "Transporter.h"
 
 APressurePlate::APressurePlate()
 {
@@ -37,6 +38,10 @@ APressurePlate::APressurePlate()
 		Mesh->SetRelativeScale3D(FVector(4.0f, 4.0f, 0.5f));
 		Mesh->SetRelativeLocation(FVector(0.0f, 0.0f, 7.2f));
 	}
+
+	Transporter = CreateDefaultSubobject<UTransporter>(TEXT("Transporter"));
+	Transporter->MoveTime = 0.25f;
+	Transporter->OwnerIsTriggerActor = true;
 }
 
 void APressurePlate::BeginPlay()
@@ -45,6 +50,10 @@ void APressurePlate::BeginPlay()
 	
 	TriggerMesh->SetVisibility(false);
 	TriggerMesh->SetCollisionProfileName(FName("OverlapAll"));
+
+	FVector StartLocation = GetActorLocation();
+	FVector EndLocation = StartLocation + FVector(0.0f, 0.0f, -10.0f);
+	Transporter->SetPoints(GetActorLocation(), EndLocation);
 }
 
 void APressurePlate::Tick(float DeltaTime)

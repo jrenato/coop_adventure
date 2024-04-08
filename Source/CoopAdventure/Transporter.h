@@ -29,6 +29,10 @@ public:
 
 	bool ArePointsSet;
 
+	/** Add the owner as it's own trigger actor in begin play */
+	UPROPERTY(EditAnywhere, Category = "Transporter")
+	bool OwnerIsTriggerActor;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Transporter")
 	float MoveTime;
 
