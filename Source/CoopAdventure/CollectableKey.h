@@ -7,6 +7,7 @@
 
 #include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Components/AudioComponent.h"
 
 #include "CollectableKey.generated.h"
 
@@ -29,6 +30,9 @@ public:
 	UPROPERTY(ReplicatedUsing = OnRep_IsCollected, BlueprintReadWrite, VisibleAnywhere)
 	bool IsCollected;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float RotationSpeed;
+
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	USceneComponent* RootComp;
 
@@ -37,6 +41,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
 	UCapsuleComponent* Capsule;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere)
+	UAudioComponent* CollectAudio;
 
 	UFUNCTION()
 	void OnRep_IsCollected();
