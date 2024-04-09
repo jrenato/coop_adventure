@@ -7,7 +7,7 @@ APressurePlate::APressurePlate()
 
 	IsActivated = false;
 
-	SetReplicates(true);
+	bReplicates = true;
 	SetReplicateMovement(true);
 
 	RootComp = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));

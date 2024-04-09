@@ -4,7 +4,7 @@ AMovableActor::AMovableActor()
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	SetReplicates(true);
+	bReplicates = true;
 	SetReplicateMovement(true);
 
 	RootComp = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
