@@ -1,5 +1,9 @@
 #include "Transporter.h"
 
+#include "PressurePlate.h"
+#include "CollectableKey.h"
+
+
 UTransporter::UTransporter()
 {
 	PrimaryComponentTick.bCanEverTick = true;
@@ -26,10 +30,21 @@ void UTransporter::BeginPlay()
 		TriggerActors.Add(Cast<APressurePlate>(GetOwner()));
 	}
 
-	for (APressurePlate* PressurePlate : TriggerActors)
+	for (AActor* TriggerActor : TriggerActors)
 	{
-		PressurePlate->OnActivated.AddDynamic(this, &UTransporter::OnPressurePlateActivated);
-		PressurePlate->OnDeactivated.AddDynamic(this, &UTransporter::OnPressurePlateDeactivated);
+		APressurePlate* PressurePlate = Cast<APressurePlate>(TriggerActor);
+		if (PressurePlate)
+		{
+			PressurePlate->OnActivated.AddDynamic(this, &UTransporter::OnTriggerActorActivated);
+			PressurePlate->OnDeactivated.AddDynamic(this, &UTransporter::OnTriggerActorDeactivated);
+			continue;
+		}
+
+		ACollectableKey* KeyActor = Cast<ACollectableKey>(TriggerActor);
+		if (KeyActor)
+		{
+			KeyActor->OnCollected.AddDynamic(this, &UTransporter::OnTriggerActorActivated);
+		}
 	}
 }
 
@@ -70,13 +85,13 @@ void UTransporter::SetPoints(FVector Start, FVector End)
 }
 
 
-void UTransporter::OnPressurePlateActivated()
+void UTransporter::OnTriggerActorActivated()
 {
 	ActivatedTriggerCount++;
 }
 
 
-void UTransporter::OnPressurePlateDeactivated()
+void UTransporter::OnTriggerActorDeactivated()
 {
 	ActivatedTriggerCount--;
 }

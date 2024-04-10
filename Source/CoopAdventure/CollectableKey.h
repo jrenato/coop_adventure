@@ -12,6 +12,8 @@
 
 #include "CollectableKey.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCollectableKeyCollected);
+
 UCLASS()
 class COOPADVENTURE_API ACollectableKey : public AActor
 {
@@ -51,4 +53,7 @@ public:
 
 	UFUNCTION()
 	void OnRep_IsCollected();
+
+	UPROPERTY(BlueprintAssignable)
+	FOnCollectableKeyCollected OnCollected;
 };

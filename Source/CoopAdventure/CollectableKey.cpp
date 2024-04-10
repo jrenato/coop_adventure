@@ -80,14 +80,10 @@ void ACollectableKey::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 
 void ACollectableKey::OnRep_IsCollected()
 {
-	/*if (HasAuthority())
+	if (HasAuthority() && IsCollected)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("OnRep_IsCollected from the Server"));
+		OnCollected.Broadcast();
 	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("OnRep_IsCollected from the Client"));
-	}*/
 
 	Mesh->SetVisibility(!IsCollected);
 	CollectAudio->Play();

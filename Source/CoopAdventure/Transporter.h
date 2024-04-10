@@ -5,7 +5,6 @@
 #include "CoreMinimal.h"
 
 #include "Components/ActorComponent.h"
-#include "PressurePlate.h"
 
 #include "Transporter.generated.h"
 
@@ -37,7 +36,7 @@ public:
 	float MoveTime;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Transporter")
-	TArray<APressurePlate*> TriggerActors;
+	TArray<AActor*> TriggerActors;
 
 	UPROPERTY(VisibleAnywhere, Category = "Transporter")
 	int ActivatedTriggerCount;
@@ -49,8 +48,8 @@ public:
 	void SetPoints(FVector Start, FVector End);
 
 	UFUNCTION()
-	void OnPressurePlateActivated();
+	void OnTriggerActorActivated();
 
 	UFUNCTION()
-	void OnPressurePlateDeactivated();
+	void OnTriggerActorDeactivated();
 };

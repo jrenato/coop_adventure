@@ -6,14 +6,13 @@
 #include "GameFramework/Actor.h"
 
 #include "Components/StaticMeshComponent.h"
+#include "Transporter.h"
 
 #include "PressurePlate.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPressurePlateActivated);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPressurePlateDeactivated);
 
-// Forward declarations to prevent circular references.
-class UTransporter;
 
 UCLASS()
 class COOPADVENTURE_API APressurePlate : public AActor
