@@ -34,6 +34,13 @@ void AWinArea::Tick(float DeltaTime)
 	
 	if (HasWinCondition)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("WinArea has been activated"));
+		// UE_LOG(LogTemp, Warning, TEXT("WinArea has been activated"));
+		MulticastRPCWin();
 	}
+}
+
+
+void AWinArea::MulticastRPCWin_Implementation()
+{
+	OnWinCondition.Broadcast();
 }
